@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@alpec.com',
                 'email_verified_at' => Carbon::now(),
-                'password' => Hash::make('admin%ADMIN')
+                'password' => Hash::make('admin%ADMIN'),
+                'is_admin'=>true
             ]);
     }
 }
