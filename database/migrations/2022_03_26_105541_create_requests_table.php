@@ -23,6 +23,7 @@ return new class extends Migration
             $table->longText('params')->nullable();
             $table->longText('headers')->nullable();
             $table->longText('body')->nullable();
+            $table->longText('response')->nullable();
             $table->timestamps();
         });
     }
