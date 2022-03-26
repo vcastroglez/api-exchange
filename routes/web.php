@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes(['register' => false]);
 
-Route::get('{path}', function () {
-    return view('welcome');
-})->where('path', '([A-z\d\-\/_.]+)?')->name('vue.index');;
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/logout',[LoginController::class,'logout']);
+    Route::get('{path}', function () {
+        return view('welcome');
+    })->where('path', '([A-z\d\-\/_.]+)?')->name('vue.index');
+});
 
 

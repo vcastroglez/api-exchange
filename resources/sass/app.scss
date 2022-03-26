@@ -1,3 +1,15 @@
+$custom-control-indicator-size: 1;
+$custom-control-indicator-bg-size: 1;
+$custom-control-gutter: 1;
+$custom-radio-indicator-border-radius: 1;
+$custom-control-indicator-border-width: 1;
+$input-line-height-lg: 1;
+$input-line-height-sm: 1;
+$b-custom-control-indicator-size-sm: 1;
+$table-dark-hover-bg: 1;
+
+@import "variables";
+
 html {
     position: relative;
     min-height: 100%;
