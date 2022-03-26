@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Collection extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function requests(){
+        return $this->hasMany('App\Models\Request','collection_id','id');
+    }
 }

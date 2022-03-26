@@ -7,10 +7,13 @@
     <title>Laravel Vue SPA</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/8632743a2c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+    <script>
+        window.USER = JSON.parse('{!! json_encode($user)  !!}')
+    </script>
 </head>
 <body>
 <div id="vue"></div>

@@ -298,10 +298,10 @@ var routes = [{
   component: _views_Welcome_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
   // new route for our categories page
-  path: '/categories',
-  name: 'categories',
+  path: '/collections',
+  name: 'collections',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_views_Categories_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/Categories.vue */ "./resources/js/views/Categories.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Collections_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/Collections.vue */ "./resources/js/views/Collections.vue"));
   } // Vue we just created
 
 }];
@@ -47116,11 +47116,11 @@ var render = function () {
       [
         _c(
           "router-link",
-          { staticClass: "nav-link", attrs: { to: "/categories", exact: "" } },
+          { staticClass: "nav-link", attrs: { to: "/collections", exact: "" } },
           [
             _c("i", { staticClass: "fas fa-fw fa-chart-area" }),
             _vm._v(" "),
-            _c("span", [_vm._v("Categories")]),
+            _c("span", [_vm._v("Collections")]),
           ]
         ),
       ],
@@ -62736,7 +62736,7 @@ Vue.compile = compileToFunctions;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "resources_js_views_Categories_vue") return "js/" + chunkId + ".js";
+/******/ 			if (chunkId === "resources_js_views_Collections_vue") return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

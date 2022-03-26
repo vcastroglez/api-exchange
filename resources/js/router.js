@@ -12,9 +12,8 @@ const routes = [
         component: Welcome,
     },
     { // new route for our categories page
-        path: '/categories',
-        name: 'categories',
-        component: () => import('./views/Categories.vue'), // Vue we just created
+        path: '/request/:id',
+        component: () => import('./components/request/Request'), // Vue we just created
     },
 ];
 
