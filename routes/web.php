@@ -27,6 +27,9 @@ Route::group(['middleware'=>'auth'],function(){
 
     //REQUEST
     Route::post('/create-request',[RequestController::class,'store']);
+    Route::post('/save-request',[RequestController::class,'save']);
+    Route::post('/send-request',[RequestController::class,'sendRequest']);
+    Route::delete('/delete-request/{id}',[RequestController::class,'delete']);
     Route::get('/get-request/{id}',[RequestController::class,'index']);
 
 

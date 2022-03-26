@@ -10,6 +10,11 @@ class Request extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    protected $casts =[
+      'params'=>'array',
+      'headers'=>'array'
+    ];
+
     public function collection(){
         return $this->belongsTo('App\Models\Collection');
     }
