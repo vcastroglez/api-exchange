@@ -37,7 +37,7 @@ class RequestService extends Controller
 
         $params = http_build_query(self::parseArray($all['params']));
         $headers  = self::parseArray($all['headers']);
-        $body = $all['body'];
+        $body = json_encode(json_decode($all['body']));
         $client = new Client();
         if(!empty($params)){
             $uri .= '?'.$params;

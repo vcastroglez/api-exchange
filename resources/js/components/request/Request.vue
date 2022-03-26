@@ -115,10 +115,15 @@ export default {
         },
         async sendRequest(){
             this.loading = true;
-            const response = await axios.post('/send-request',this.request);
-            this.request = response.data.item;
-            this.original_hash = JSON.stringify(this.request).hashCode()
-            this.loading = false;
+            try {
+                const response = await axios.post('/send-request', this.request);
+                this.request = response.data.item;
+                this.loading = false;
+            }catch(e){
+                console.log(e);
+                this.loading = false;
+                return;
+            }
         },
         async getRequest(id){
             const response = await axios.get(`/get-request/${id}`);
