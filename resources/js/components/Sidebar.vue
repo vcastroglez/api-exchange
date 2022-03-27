@@ -15,6 +15,7 @@
                     </v-list-item-action>
                 </v-list-item>
                 <v-list-group
+                    v-if="$store.state.collections.length"
                     :value="true"
                     prepend-icon="mdi-account-circle"
                 >
@@ -31,7 +32,7 @@
                     >
                         <template v-slot:activator>
                             <v-list-item>
-                                <v-list-item-title>{{ collection.name }}</v-list-item-title>
+                                <v-list-item-title>{{ collection.name }} <span title="Shared" v-if="collection.user_id!==$store.state.user.id"><v-icon color="primary" small>mdi-account-multiple</v-icon></span></v-list-item-title>
                                 <v-list-item-action>
                                     <v-menu
                                         left
@@ -50,6 +51,9 @@
                                         <v-list>
                                             <v-list-item :to="`/variables/${collection.id}`">
                                                 <v-list-item-title>Variables</v-list-item-title>
+                                            </v-list-item>
+                                            <v-list-item @click="share(collection.id)">
+                                                <v-list-item-title>Share</v-list-item-title>
                                             </v-list-item>
                                             <v-list-item @click="addRequest(collection)">
                                                 <v-list-item-title>Add request</v-list-item-title>
@@ -94,6 +98,11 @@ export default {
         selected_collection:{}
     }),
     methods: {
+        async share(id) {
+            const mail = window.prompt("Set the mail to share");
+            const response = await axios.post(`/share-collection/${id}`, {mail});
+            console.log(response.data);
+        },
         addRequest(collection) {
             this.selected_collection = collection;
             this.add_request_dialog = true;

@@ -58,5 +58,6 @@ export default {
         padding: 10px;
         overflow: auto;
         word-wrap: break-word;
+        min-height: 300px;
     }
 </style>
