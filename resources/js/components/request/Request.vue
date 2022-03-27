@@ -78,14 +78,13 @@
 
 <script>
 import Params from "./Params";
-import Headers from "./Headers";
 import RequestBody from "./Body";
 import {bus} from "../../app";
 import Response from "./Response";
 
 export default {
     name: "Request",
-    components: {Response, Headers, Params,RequestBody},
+    components: {Response, Params,RequestBody},
     data: function () {
         return {
             original_hash:null,

@@ -14,6 +14,10 @@ const routes = [
     { // new route for our categories page
         path: '/request/:id',
         component: () => import('./components/request/Request'), // Vue we just created
+    },,
+    { // new route for our categories page
+        path: '/variables/:id',
+        component: () => import('./components/collection/variables/Variables'), // Vue we just created
     },
 ];
 

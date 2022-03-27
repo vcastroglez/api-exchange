@@ -46,7 +46,13 @@ class RequestService extends Controller
             'headers'=>$headers,
             'body'=>$body
         ]);
-        $all['response'] = $res->getBody()->getContents();
+        $response = [];
+        $response['contents'] = $res->getBody()->getContents();
+        $response['status_code'] = $res->getStatusCode();
+        $response['headers'] = $res->getHeaders();
+        $response['protocol'] = $res->getProtocolVersion();
+        $response['reason_phrase'] = $res->getReasonPhrase();
+        $all['response'] = $response;
         return $all;
     }
 

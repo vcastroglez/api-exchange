@@ -48,6 +48,9 @@
                                         </template>
 
                                         <v-list>
+                                            <v-list-item :to="`/variables/${collection.id}`">
+                                                <v-list-item-title>Variables</v-list-item-title>
+                                            </v-list-item>
                                             <v-list-item @click="addRequest(collection)">
                                                 <v-list-item-title>Add request</v-list-item-title>
                                             </v-list-item>
