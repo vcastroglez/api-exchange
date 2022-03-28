@@ -28,7 +28,7 @@
                     <v-list-item>
                         <v-list-item-title>{{$store.state.user.name}}</v-list-item-title>
                     </v-list-item>
-                    <v-list-item to="/logout">
+                    <v-list-item href="/logout">
                         <v-list-item-title>Logout</v-list-item-title>
                     </v-list-item>
                 </v-list>

@@ -4850,7 +4850,7 @@ var render = function () {
                   _vm._v(" "),
                   _c(
                     "v-list-item",
-                    { attrs: { to: "/logout" } },
+                    { attrs: { href: "/logout" } },
                     [_c("v-list-item-title", [_vm._v("Logout")])],
                     1
                   ),
