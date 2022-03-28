@@ -1,1 +1,10 @@
-.spacer{display:flex;flex-grow:1;height:auto;width:auto}.block{display:block}
+.spacer {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-grow: 1;
+}
+
+.block {
+  display: block;
+}

@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Params__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Params */ "./resources/js/components/request/Params.vue");
 //
 //
 //
@@ -21,9 +22,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "RequestBody",
+  components: {
+    Params: _Params__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: ['value'],
+  data: function data() {
+    return {
+      mode: 0,
+      json_model: []
+    };
+  },
   computed: {
     model: {
       get: function get() {
@@ -32,6 +64,43 @@ __webpack_require__.r(__webpack_exports__);
       set: function set(value) {
         this.$emit('input', value);
       }
+    }
+  },
+  methods: {
+    objectToJson: function objectToJson(object) {
+      var json_format = {};
+      object.forEach(function (item) {
+        json_format[item.name] = item.value;
+      });
+      return JSON.stringify(json_format, null, 2);
+    },
+    formatJson: function formatJson() {
+      this.model = JSON.stringify(JSON.parse(this.model), null, 2);
+    }
+  },
+  watch: {
+    json_model: {
+      handler: function handler(value) {
+        this.model = this.objectToJson(value);
+      },
+      deep: true
+    },
+    mode: {
+      handler: function handler(value) {
+        var _this = this;
+
+        if (value === 0) {
+          this.json_model = [];
+          var elem = JSON.parse(this.model);
+          Object.keys(elem).forEach(function (item) {
+            _this.json_model.push({
+              name: item,
+              value: elem[item]
+            });
+          });
+        }
+      },
+      immediate: true
     }
   }
 });
@@ -48,6 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -84,7 +154,8 @@ __webpack_require__.r(__webpack_exports__);
         });
         this.$emit('input', value);
       },
-      immediate: true
+      immediate: true,
+      deep: true
     }
   }
 });
@@ -940,23 +1011,139 @@ var render = function () {
     [
       _c(
         "v-row",
+        {
+          attrs: {
+            "align-content": "center",
+            align: "center",
+            "no-gutters": "",
+          },
+        },
+        [
+          _c(
+            "v-col",
+            [
+              _c(
+                "v-radio-group",
+                {
+                  attrs: { row: "" },
+                  model: {
+                    value: _vm.mode,
+                    callback: function ($$v) {
+                      _vm.mode = $$v
+                    },
+                    expression: "mode",
+                  },
+                },
+                [
+                  _c("v-radio", { attrs: { label: "Form data", value: 0 } }),
+                  _vm._v(" "),
+                  _c("v-radio", { attrs: { label: "Raw", value: 1 } }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _vm.mode === 1
+                ? _c(
+                    "v-btn",
+                    {
+                      staticClass: "text-none",
+                      attrs: { text: "", color: "primary", small: "" },
+                      on: { click: _vm.formatJson },
+                    },
+                    [_vm._v("Format json")]
+                  )
+                : _vm._e(),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
         { attrs: { "no-gutters": "" } },
         [
           _c(
             "v-col",
             [
-              _c("v-textarea", {
-                attrs: { outlined: "" },
-                model: {
-                  value: _vm.model,
-                  callback: function ($$v) {
-                    _vm.model = $$v
-                  },
-                  expression: "model",
-                },
+              _vm.mode === 1
+                ? _c("v-textarea", {
+                    attrs: { outlined: "" },
+                    model: {
+                      value: _vm.model,
+                      callback: function ($$v) {
+                        _vm.model = $$v
+                      },
+                      expression: "model",
+                    },
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.json_model, function (header, index) {
+                return _vm.mode === 0
+                  ? _c(
+                      "v-row",
+                      { key: index, attrs: { "no-gutters": "" } },
+                      [
+                        _c(
+                          "v-col",
+                          { attrs: { cols: "3" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: {
+                                "prepend-icon": "mdi-plus",
+                                outlined: "",
+                              },
+                              on: {
+                                "click:prepend": function ($event) {
+                                  return _vm.json_model.push({
+                                    name: "",
+                                    value: "",
+                                  })
+                                },
+                              },
+                              model: {
+                                value: header.name,
+                                callback: function ($$v) {
+                                  _vm.$set(header, "name", $$v)
+                                },
+                                expression: "header.name",
+                              },
+                            }),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-col",
+                          [
+                            _c("v-text-field", {
+                              attrs: { outlined: "" },
+                              model: {
+                                value: header.value,
+                                callback: function ($$v) {
+                                  _vm.$set(header, "value", $$v)
+                                },
+                                expression: "header.value",
+                              },
+                            }),
+                          ],
+                          1
+                        ),
+                      ],
+                      1
+                    )
+                  : _vm._e()
               }),
             ],
-            1
+            2
           ),
         ],
         1
