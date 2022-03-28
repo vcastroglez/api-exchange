@@ -39,7 +39,13 @@ class RequestService extends Controller
         $headers  = self::parseArray($all['headers']);
         $body = json_encode(json_decode($all['body']));
         $client = new Client([
-            'verify'=>false
+            'defaults' => [
+                'config' => [
+                    'curl' => [
+                        CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2
+                    ]
+                ]
+            ]
         ]);
         if(!empty($params)){
             $uri .= '?'.$params;
