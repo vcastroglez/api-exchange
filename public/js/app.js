@@ -2310,9 +2310,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _collection_AddCollection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collection/AddCollection */ "./resources/js/components/collection/AddCollection.vue");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
-/* harmony import */ var _request_AddRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./request/AddRequest */ "./resources/js/components/request/AddRequest.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _collection_AddCollection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./collection/AddCollection */ "./resources/js/components/collection/AddCollection.vue");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
+/* harmony import */ var _request_AddRequest__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./request/AddRequest */ "./resources/js/components/request/AddRequest.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2398,8 +2413,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Sidebar",
   components: {
-    AddRequest: _request_AddRequest__WEBPACK_IMPORTED_MODULE_2__["default"],
-    AddCollection: _collection_AddCollection__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AddRequest: _request_AddRequest__WEBPACK_IMPORTED_MODULE_3__["default"],
+    AddCollection: _collection_AddCollection__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2409,6 +2424,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    share: function share(id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var mail, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                mail = window.prompt("Set the mail to share");
+                _context.next = 3;
+                return axios.post("/share-collection/".concat(id), {
+                  mail: mail
+                });
+
+              case 3:
+                response = _context.sent;
+                console.log(response.data);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     addRequest: function addRequest(collection) {
       this.selected_collection = collection;
       this.add_request_dialog = true;
@@ -2419,7 +2459,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteCollection: function deleteCollection(id) {
       var confirm = window.confirm("Are you sure to delete this collection?");
       if (confirm) axios["delete"]("/delete-collection/".concat(id)).then(function () {
-        _app__WEBPACK_IMPORTED_MODULE_1__.bus.$emit('reload-collections');
+        _app__WEBPACK_IMPORTED_MODULE_2__.bus.$emit('reload-collections');
       });
     }
   }
@@ -2661,6 +2701,13 @@ var routes = [{
   path: '/request/:id',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_request_Request_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/request/Request */ "./resources/js/components/request/Request.vue"));
+  } // Vue we just created
+
+},, {
+  // new route for our categories page
+  path: '/variables/:id',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_collection_variables_Variables_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/collection/variables/Variables */ "./resources/js/components/collection/variables/Variables.vue"));
   } // Vue we just created
 
 }];
@@ -4870,187 +4917,291 @@ var render = function () {
                 1
               ),
               _vm._v(" "),
-              _c(
-                "v-list-group",
-                {
-                  attrs: { value: true, "prepend-icon": "mdi-account-circle" },
-                  scopedSlots: _vm._u([
+              _vm.$store.state.collections.length
+                ? _c(
+                    "v-list-group",
                     {
-                      key: "activator",
-                      fn: function () {
-                        return [
-                          _c("v-list-item-title", [_vm._v("Collections")]),
-                        ]
+                      attrs: {
+                        value: true,
+                        "prepend-icon": "mdi-account-circle",
                       },
-                      proxy: true,
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "activator",
+                            fn: function () {
+                              return [
+                                _c("v-list-item-title", [
+                                  _vm._v("Collections"),
+                                ]),
+                              ]
+                            },
+                            proxy: true,
+                          },
+                        ],
+                        null,
+                        false,
+                        2362719298
+                      ),
                     },
-                  ]),
-                },
-                [
-                  _vm._v(" "),
-                  _vm._l(_vm.$store.state.collections, function (collection) {
-                    return _c(
-                      "v-list-group",
-                      {
-                        key: collection.id,
-                        attrs: {
-                          value: true,
-                          "no-action": "",
-                          "sub-group": "",
-                        },
-                        scopedSlots: _vm._u(
-                          [
+                    [
+                      _vm._v(" "),
+                      _vm._l(
+                        _vm.$store.state.collections,
+                        function (collection) {
+                          return _c(
+                            "v-list-group",
                             {
-                              key: "activator",
-                              fn: function () {
-                                return [
-                                  _c(
-                                    "v-list-item",
-                                    [
-                                      _c("v-list-item-title", [
-                                        _vm._v(_vm._s(collection.name)),
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-list-item-action",
-                                        [
-                                          _c(
-                                            "v-menu",
-                                            {
-                                              attrs: { left: "", bottom: "" },
-                                              scopedSlots: _vm._u(
-                                                [
-                                                  {
-                                                    key: "activator",
-                                                    fn: function (ref) {
-                                                      var on = ref.on
-                                                      var attrs = ref.attrs
-                                                      return [
-                                                        _c(
-                                                          "v-btn",
-                                                          _vm._g(
-                                                            _vm._b(
-                                                              {
-                                                                attrs: {
-                                                                  icon: "",
-                                                                },
-                                                              },
-                                                              "v-btn",
-                                                              attrs,
-                                                              false
-                                                            ),
-                                                            on
+                              key: collection.id,
+                              attrs: {
+                                value: true,
+                                "no-action": "",
+                                "sub-group": "",
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "activator",
+                                    fn: function () {
+                                      return [
+                                        _c(
+                                          "v-list-item",
+                                          [
+                                            _c("v-list-item-title", [
+                                              _vm._v(
+                                                _vm._s(collection.name) + " "
+                                              ),
+                                              collection.user_id !==
+                                              _vm.$store.state.user.id
+                                                ? _c(
+                                                    "span",
+                                                    {
+                                                      attrs: {
+                                                        title: "Shared",
+                                                      },
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-icon",
+                                                        {
+                                                          attrs: {
+                                                            color: "primary",
+                                                            small: "",
+                                                          },
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "mdi-account-multiple"
                                                           ),
-                                                          [
-                                                            _c("v-icon", [
-                                                              _vm._v(
-                                                                "mdi-dots-vertical"
+                                                        ]
+                                                      ),
+                                                    ],
+                                                    1
+                                                  )
+                                                : _vm._e(),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-item-action",
+                                              [
+                                                _c(
+                                                  "v-menu",
+                                                  {
+                                                    attrs: {
+                                                      left: "",
+                                                      bottom: "",
+                                                    },
+                                                    scopedSlots: _vm._u(
+                                                      [
+                                                        {
+                                                          key: "activator",
+                                                          fn: function (ref) {
+                                                            var on = ref.on
+                                                            var attrs =
+                                                              ref.attrs
+                                                            return [
+                                                              _c(
+                                                                "v-btn",
+                                                                _vm._g(
+                                                                  _vm._b(
+                                                                    {
+                                                                      attrs: {
+                                                                        icon: "",
+                                                                      },
+                                                                    },
+                                                                    "v-btn",
+                                                                    attrs,
+                                                                    false
+                                                                  ),
+                                                                  on
+                                                                ),
+                                                                [
+                                                                  _c("v-icon", [
+                                                                    _vm._v(
+                                                                      "mdi-dots-vertical"
+                                                                    ),
+                                                                  ]),
+                                                                ],
+                                                                1
                                                               ),
-                                                            ]),
+                                                            ]
+                                                          },
+                                                        },
+                                                      ],
+                                                      null,
+                                                      true
+                                                    ),
+                                                  },
+                                                  [
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-list",
+                                                      [
+                                                        _c(
+                                                          "v-list-item",
+                                                          {
+                                                            attrs: {
+                                                              to:
+                                                                "/variables/" +
+                                                                collection.id,
+                                                            },
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [
+                                                                _vm._v(
+                                                                  "Variables"
+                                                                ),
+                                                              ]
+                                                            ),
                                                           ],
                                                           1
                                                         ),
-                                                      ]
-                                                    },
-                                                  },
-                                                ],
-                                                null,
-                                                true
-                                              ),
-                                            },
-                                            [
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list",
-                                                [
-                                                  _c(
-                                                    "v-list-item",
-                                                    {
-                                                      on: {
-                                                        click: function (
-                                                          $event
-                                                        ) {
-                                                          return _vm.addRequest(
-                                                            collection
-                                                          )
-                                                        },
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("v-list-item-title", [
-                                                        _vm._v("Add request"),
-                                                      ]),
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-list-item",
-                                                    {
-                                                      on: {
-                                                        click: function (
-                                                          $event
-                                                        ) {
-                                                          return _vm.deleteCollection(
-                                                            collection.id
-                                                          )
-                                                        },
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("v-list-item-title", [
-                                                        _vm._v(
-                                                          "Delete collection"
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item",
+                                                          {
+                                                            on: {
+                                                              click: function (
+                                                                $event
+                                                              ) {
+                                                                return _vm.share(
+                                                                  collection.id
+                                                                )
+                                                              },
+                                                            },
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [_vm._v("Share")]
+                                                            ),
+                                                          ],
+                                                          1
                                                         ),
-                                                      ]),
-                                                    ],
-                                                    1
-                                                  ),
-                                                ],
-                                                1
-                                              ),
-                                            ],
-                                            1
-                                          ),
-                                        ],
-                                        1
-                                      ),
-                                    ],
-                                    1
-                                  ),
-                                ]
-                              },
-                              proxy: true,
-                            },
-                          ],
-                          null,
-                          true
-                        ),
-                      },
-                      [
-                        _vm._v(" "),
-                        _vm._l(collection.requests, function (request) {
-                          return _c(
-                            "v-list-item",
-                            {
-                              key: request.id,
-                              attrs: { to: "/request/" + request.id, link: "" },
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item",
+                                                          {
+                                                            on: {
+                                                              click: function (
+                                                                $event
+                                                              ) {
+                                                                return _vm.addRequest(
+                                                                  collection
+                                                                )
+                                                              },
+                                                            },
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [
+                                                                _vm._v(
+                                                                  "Add request"
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-item",
+                                                          {
+                                                            on: {
+                                                              click: function (
+                                                                $event
+                                                              ) {
+                                                                return _vm.deleteCollection(
+                                                                  collection.id
+                                                                )
+                                                              },
+                                                            },
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "v-list-item-title",
+                                                              [
+                                                                _vm._v(
+                                                                  "Delete collection"
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ],
+                                                      1
+                                                    ),
+                                                  ],
+                                                  1
+                                                ),
+                                              ],
+                                              1
+                                            ),
+                                          ],
+                                          1
+                                        ),
+                                      ]
+                                    },
+                                    proxy: true,
+                                  },
+                                ],
+                                null,
+                                true
+                              ),
                             },
                             [
-                              _c("v-list-item-title", [
-                                _vm._v(_vm._s(request.name)),
-                              ]),
+                              _vm._v(" "),
+                              _vm._l(collection.requests, function (request) {
+                                return _c(
+                                  "v-list-item",
+                                  {
+                                    key: request.id,
+                                    attrs: {
+                                      to: "/request/" + request.id,
+                                      link: "",
+                                    },
+                                  },
+                                  [
+                                    _c("v-list-item-title", [
+                                      _vm._v(_vm._s(request.name)),
+                                    ]),
+                                  ],
+                                  1
+                                )
+                              }),
                             ],
-                            1
+                            2
                           )
-                        }),
-                      ],
-                      2
-                    )
-                  }),
-                ],
-                2
-              ),
+                        }
+                      ),
+                    ],
+                    2
+                  )
+                : _vm._e(),
             ],
             1
           ),
@@ -68280,7 +68431,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if (chunkId === "resources_js_components_request_Request_vue") return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_request_Request_vue":1,"resources_js_components_collection_variables_Variables_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
