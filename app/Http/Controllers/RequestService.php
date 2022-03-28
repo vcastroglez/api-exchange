@@ -38,6 +38,7 @@ class RequestService extends Controller
         $params = http_build_query(self::parseArray($all['params']));
         $headers  = self::parseArray($all['headers']);
         $body = json_encode(json_decode($all['body']));
+        $jar = new \GuzzleHttp\Cookie\CookieJar();
         $client = new Client([
             'defaults' => [
                 'config' => [
@@ -47,7 +48,9 @@ class RequestService extends Controller
                     ]
                 ]
             ],
-            'verify'=>false
+            'verify'=>false,
+            'cookies' => $jar,
+            'version' => 1.2
         ]);
         if(!empty($params)){
             $uri .= '?'.$params;
