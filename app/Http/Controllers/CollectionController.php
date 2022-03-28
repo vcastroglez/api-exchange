@@ -37,9 +37,13 @@ class CollectionController extends Controller
     }
 
     public function delete($id){
-        Shared::where('collection_id',$id)->where('user_id',Auth::user()->id)->delete();
         $collection = Collection::find($id);
-        if($collection->user_id === Auth::user()->id) $collection->delete();
+        if($collection->user_id === Auth::user()->id){
+            Shared::where('collection_id',$id)->delete();
+            $collection->delete();
+        }else{
+            Shared::where('collection_id',$id)->where('user_id',Auth::user()->id)->delete();
+        }
         return response()->json(['success' => true]);
     }
 }
