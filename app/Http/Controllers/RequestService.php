@@ -46,7 +46,8 @@ class RequestService extends Controller
                         CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1'
                     ]
                 ]
-            ]
+            ],
+            'verify'=>false
         ]);
         if(!empty($params)){
             $uri .= '?'.$params;
