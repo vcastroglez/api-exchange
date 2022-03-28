@@ -42,7 +42,8 @@ class RequestService extends Controller
             'defaults' => [
                 'config' => [
                     'curl' => [
-                        CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2
+                        CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
+                        CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1'
                     ]
                 ]
             ]
