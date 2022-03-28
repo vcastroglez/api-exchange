@@ -38,6 +38,8 @@ class CollectionController extends Controller
 
     public function delete($id){
         Shared::where('collection_id',$id)->where('user_id',Auth::user()->id)->delete();
-        return response()->json(['success' => true, 'msg' => Collection::find($id)->delete()]);
+        $collection = Collection::find($id);
+        if($collection->user_id === Auth::user()->id) $collection->delete();
+        return response()->json(['success' => true]);
     }
 }
