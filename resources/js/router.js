@@ -1,15 +1,15 @@
 // router.js
 import Vue from 'vue';
 import Router from 'vue-router';
-import Welcome from './views/Welcome.vue';
+import Dashboard from './views/Dashboard.vue';
 
 Vue.use(Router);
 
 const routes = [
     {
         path: '/',
-        name: 'welcome',
-        component: Welcome,
+        name: 'dashboard',
+        component: Dashboard,
     },
     { // new route for our categories page
         path: '/request/:id',
