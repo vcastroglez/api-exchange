@@ -22,7 +22,7 @@
             <v-col cols="11">
                 <div class="response-wrap">
                     <pre v-if="mode===2">{{ model.contents }}</pre>
-                    <pre v-if="mode===1">{{ JSON.parse(model.contents) }}</pre>
+                    <pre v-if="mode===1">{{ parseJson(model.contents) }}</pre>
                     <div v-if="mode===3" v-html="model.contents"></div>
                 </div>
             </v-col>
@@ -39,6 +39,15 @@ export default {
     data: () => ({
         mode:2,
     }),
+    methods:{
+        parseJson(item){
+            try {
+                return JSON.parse(item);
+            }catch (e){
+                return item;
+            }
+        }
+    },
     computed: {
         model: {
             get() {

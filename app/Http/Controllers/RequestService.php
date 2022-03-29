@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 
 class RequestService extends Controller
@@ -55,10 +56,14 @@ class RequestService extends Controller
         if(!empty($params)){
             $uri .= '?'.$params;
         }
-        $res = $client->request($method,$uri,[
-            'headers'=>$headers,
-            'body'=>$body
-        ]);
+        try {
+            $res = $client->request($method, $uri, [
+                'headers' => $headers,
+                'body' => $body
+            ]);
+        }catch (ClientException $exception){
+            $res = $exception->getResponse();
+        }
         $response = [];
         $response['contents'] = $res->getBody()->getContents();
         $response['status_code'] = $res->getStatusCode();
