@@ -1,15 +1,20 @@
 <template>
     <v-container>
         <h1>Dashboard</h1>
-        <h3>Comming soon... maybe</h3>
+        <v-row>
+            <v-col>
+                <import-postman></import-postman>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script>
 import ChangePassword from "../components/dashboard/ChangePassword";
+import ImportPostman from "./ImportPostman";
 export default {
     name: "Dashboard",
-    components: {ChangePassword},
+    components: {ImportPostman, ChangePassword},
 }
 </script>
 

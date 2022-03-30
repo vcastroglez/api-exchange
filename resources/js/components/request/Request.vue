@@ -1,11 +1,14 @@
 <template>
     <v-container>
-        <v-row>
-            <v-col>
+        <v-row align="center" no-gutters>
+            <v-col cols="auto">
                 <v-breadcrumbs
                     :items="breadcrumbs"
                     divider=">"
                 ></v-breadcrumbs>
+            </v-col>
+            <v-col cols="1">
+                <v-btn icon @click="rename"><v-icon small>mdi-pencil</v-icon></v-btn>
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="1">
@@ -51,28 +54,28 @@
                     <v-tab-item>
                         <v-card flat>
                             <v-card-text>
-                                <params v-model="request.headers"></params>
+                                <params :key="key" v-model="request.headers"></params>
                             </v-card-text>
                         </v-card>
                     </v-tab-item>
                     <v-tab-item>
                         <v-card flat>
                             <v-card-text>
-                                <params v-model="request.params"></params>
+                                <params :key="key" v-model="request.params"></params>
                             </v-card-text>
                         </v-card>
                     </v-tab-item>
                     <v-tab-item>
                         <v-card flat>
                             <v-card-text>
-                                <request-body v-model="request.body"></request-body>
+                                <request-body :key="key" v-model="request.body"></request-body>
                             </v-card-text>
                         </v-card>
                     </v-tab-item>
                 </v-tabs-items>
             </v-col>
         </v-row>
-        <response v-if="request.response"  v-model="request.response"></response>
+        <response :key="key" v-if="request.response"  v-model="request.response"></response>
     </v-container>
 </template>
 
@@ -90,6 +93,7 @@ export default {
             original_hash:null,
             loading:false,
             tab:0,
+            key:0,
             tabs:['Headers','Params','Body'],
             request: {
             },
@@ -102,6 +106,16 @@ export default {
         }
     },
     methods:{
+        async rename(){
+            const new_name = window.prompt("Set new name for request");
+            if(!new_name){
+                alert('Insert a name!');
+                return;
+            }
+            await axios.post(`/rename-request/${this.request.id}`,{new_name});
+            bus.$emit('reload-collections')
+            await this.getRequest(this.id)
+        },
         async deleteRequest(){
             const confirm = window.confirm("Are you sure to delete?");
             if(confirm) await axios.delete(`/delete-request/${this.request.id}`);
@@ -128,6 +142,7 @@ export default {
             const response = await axios.get(`/get-request/${id}`);
             this.request = response.data.item;
             this.original_hash = JSON.stringify(this.request).hashCode()
+            this.key++
         }
     },
     computed: {

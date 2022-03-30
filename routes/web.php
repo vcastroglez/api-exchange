@@ -26,9 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/change-pass',[UsersController::class,'changePass']);
     //COLLECTIONS
     Route::get('/get-collections', [CollectionController::class, 'index']);
+    Route::post('/rename-collection/{id}', [CollectionController::class, 'rename']);
     Route::post('/create-collection', [CollectionController::class, 'store']);
     Route::delete('/delete-collection/{id}', [CollectionController::class, 'delete']);
     Route::post('/share-collection/{id}', [CollectionController::class, 'share']);
+    Route::post('/import-collection', [CollectionController::class, 'import']);
 
     //VARIABLES
     Route::get('/get-variables/{id}', [VariableController::class, 'index']);
@@ -37,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     //REQUEST
     Route::post('/create-request', [RequestController::class, 'store']);
     Route::post('/save-request', [RequestController::class, 'save']);
+    Route::post('/rename-request/{id}', [RequestController::class, 'rename']);
     Route::post('/send-request', [RequestController::class, 'sendRequest']);
     Route::delete('/delete-request/{id}', [RequestController::class, 'delete']);
     Route::get('/get-request/{id}', [RequestController::class, 'index']);

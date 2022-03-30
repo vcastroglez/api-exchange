@@ -34,4 +34,8 @@ class RequestController extends Controller
     public function sendRequest(Request $request){
         return response()->json(['success' => true, 'item' => $this->service->sendRequest($request->all())]);
     }
+
+    public function rename(Request $request, $id){
+        return response()->json(['success' => true, 'msg' => $this->service->renameRequest($id,$request->new_name)]);
+    }
 }

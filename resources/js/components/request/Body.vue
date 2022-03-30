@@ -13,7 +13,7 @@
         </v-row>
         <v-row no-gutters>
             <v-col>
-                <v-textarea v-if="mode===1" outlined v-model="model"></v-textarea>
+                <v-textarea v-if="mode===1" outlined v-model="model" height="500px"></v-textarea>
                 <v-row  v-if="mode===0" no-gutters v-for="(header,index) in json_model" :key="index">
                     <v-col cols="3">
                         <v-text-field prepend-icon="mdi-plus" @click:prepend="json_model.push({name:'',value:''})"

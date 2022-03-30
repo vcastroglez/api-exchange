@@ -7,6 +7,7 @@
             app
             clipped-left
         >
+            <v-app-bar-nav-icon @click="toggleSidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>API Exchange</v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -43,12 +44,18 @@
 
 <script>
 import ChangePassword from "./dashboard/ChangePassword";
+import {bus} from "../app";
 export default {
     name: "Header",
     components: {ChangePassword},
     data: () => ({
         dialog:false
     }),
+    methods:{
+        toggleSidebar(){
+            bus.$emit('toggle-sidebar');
+        }
+    }
 }
 </script>
 

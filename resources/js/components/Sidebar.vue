@@ -1,6 +1,14 @@
 <template>
     <div>
-        <v-navigation-drawer clipped app dark color="black">
+        <v-navigation-drawer width="20vw" app clipped dark color="black" v-model="drawer" style="overflow-x: auto">
+            <h2 class="white--text pa-4">API Exchange</h2>
+            <template v-slot:append>
+                <div class="pa-2">
+                    <v-btn href="/logout" block>
+                        Logout
+                    </v-btn>
+                </div>
+            </template>
             <v-list
                 dense
                 nav
@@ -52,6 +60,9 @@
                                             <v-list-item :to="`/variables/${collection.id}`">
                                                 <v-list-item-title>Variables</v-list-item-title>
                                             </v-list-item>
+                                            <v-list-item @click="rename(collection.id)">
+                                                <v-list-item-title>Rename</v-list-item-title>
+                                            </v-list-item>
                                             <v-list-item @click="share(collection.id)">
                                                 <v-list-item-title>Share</v-list-item-title>
                                             </v-list-item>
@@ -95,13 +106,28 @@ export default {
     data: () => ({
         add_collection_dialog: false,
         add_request_dialog: false,
-        selected_collection:{}
+        selected_collection:{},
+        drawer:true
     }),
+    mounted() {
+        bus.$on('toggle-sidebar',()=>{
+            this.drawer = !this.drawer;
+        })
+    },
     methods: {
         async share(id) {
             const mail = window.prompt("Set the mail to share");
             const response = await axios.post(`/share-collection/${id}`, {mail});
             console.log(response.data);
+        },
+        async rename(id){
+            const new_name = window.prompt("Set new name for collection");
+            if(!new_name){
+                alert('Insert a name!');
+                return;
+            }
+            await axios.post(`/rename-collection/${id}`,{new_name});
+            bus.$emit('reload-collections')
         },
         addRequest(collection) {
             this.selected_collection = collection;
