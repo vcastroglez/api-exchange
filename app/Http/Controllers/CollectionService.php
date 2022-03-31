@@ -97,13 +97,13 @@
                 $query = $item['request']['url']['query'] ?? [];
                 $to_query = [];
                 foreach($query as $q){
-                    $to_query[] = ['name'=>$q['key'],'value'=>$q['value'],'description'=>$q['description']??null];
+                    $to_query[] = ['key'=>$q['key'],'value'=>$q['value'],'description'=>$q['description']??null];
                 }
 
                 $headers = $item['request']['header'] ?? [];
                 $to_header = [];
                 foreach($headers as $header){
-                    $to_header[] = ['name'=>$header['key'],'value'=>$header['value'],'description'=>$header['description']??null];
+                    $to_header[] = ['key'=>$header['key'],'value'=>$header['value'],'description'=>$header['description']??null];
                 }
 
                 $this->serviceRequest->createRequest($collection_id, $item['name'], $item['request']['method'], $url, $to_query, $to_header, json_encode($body), $item['response']);
@@ -113,12 +113,12 @@
         }
 
         public function createVariable(mixed $key, mixed $value, mixed $collection_id) {
-            $exist = Variable::where('collection_id',$collection_id)->where('name',$key)->where('initial_value',$value)->count();
+            $exist = Variable::where('collection_id',$collection_id)->where('key',$key)->where('initial_value',$value)->count();
             if($exist) return false;
 
             $variable = new Variable();
             $variable->collection_id = $collection_id;
-            $variable->name = $key;
+            $variable->key = $key;
             $variable->initial_value = $value;
             $variable->current_value = $value;
             $variable->save();

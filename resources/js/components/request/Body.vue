@@ -16,9 +16,9 @@
                 <v-textarea v-if="mode===1" outlined v-model="model" height="500px"></v-textarea>
                 <v-row  v-if="mode===0" no-gutters v-for="(header,index) in json_model" :key="index">
                     <v-col cols="3">
-                        <v-text-field prepend-icon="mdi-plus" @click:prepend="json_model.push({name:'',value:''})"
+                        <v-text-field prepend-icon="mdi-plus" @click:prepend="json_model.push({key:'',value:''})"
                                       outlined
-                                      v-model="header.name"></v-text-field>
+                                      v-model="header.key"></v-text-field>
                     </v-col>
                     <v-col>
                         <v-text-field outlined v-model="header.value"></v-text-field>
@@ -54,7 +54,7 @@ export default {
         objectToJson(object) {
             const json_format = {}
             object.forEach(item => {
-                json_format[item.name] = item.value;
+                json_format[item.key] = item.value;
             })
             return JSON.stringify(json_format,null,2);
         },
@@ -75,7 +75,7 @@ export default {
                     this.json_model = [];
                     const elem = JSON.parse(this.model);
                     Object.keys(elem).forEach(item => {
-                        this.json_model.push({name: item, value: elem[item]});
+                        this.json_model.push({key: item, value: elem[item]});
                     });
                 }
             }, immediate: true

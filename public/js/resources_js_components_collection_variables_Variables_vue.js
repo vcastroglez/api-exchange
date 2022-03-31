@@ -97,7 +97,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
                 _this2.variables = response.data.variables || [];
                 if (!_this2.variables.length) _this2.variables.push({
-                  name: '',
+                  key: '',
                   initial_value: '',
                   current_value: ''
                 });
@@ -236,18 +236,18 @@ var render = function () {
                       on: {
                         "click:prepend": function ($event) {
                           return _vm.variables.push({
-                            name: "",
+                            key: "",
                             initial_value: "",
                             current_value: "",
                           })
                         },
                       },
                       model: {
-                        value: variable.name,
+                        value: variable.key,
                         callback: function ($$v) {
-                          _vm.$set(variable, "name", $$v)
+                          _vm.$set(variable, "key", $$v)
                         },
-                        expression: "variable.name",
+                        expression: "variable.key",
                       },
                     }),
                   ],

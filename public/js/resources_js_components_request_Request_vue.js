@@ -70,7 +70,7 @@ __webpack_require__.r(__webpack_exports__);
     objectToJson: function objectToJson(object) {
       var json_format = {};
       object.forEach(function (item) {
-        json_format[item.name] = item.value;
+        json_format[item.key] = item.value;
       });
       return JSON.stringify(json_format, null, 2);
     },
@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
           var elem = JSON.parse(this.model);
           Object.keys(elem).forEach(function (item) {
             _this.json_model.push({
-              name: item,
+              key: item,
               value: elem[item]
             });
           });
@@ -149,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
       handler: function handler(value) {
         if (value.length) return;
         value.push({
-          name: '',
+          key: '',
           value: ''
         });
         this.$emit('input', value);
@@ -262,6 +262,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -278,37 +281,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       original_hash: null,
       loading: false,
       tab: 0,
+      key: 0,
       tabs: ['Headers', 'Params', 'Body'],
       request: {},
       methods: ['GET', 'POST', 'PUT', 'DELETE']
     };
   },
   methods: {
-    deleteRequest: function deleteRequest() {
+    rename: function rename() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var confirm;
+        var new_name;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                confirm = window.confirm("Are you sure to delete?");
+                new_name = window.prompt("Set new name for request");
 
-                if (!confirm) {
+                if (new_name) {
                   _context.next = 4;
                   break;
                 }
 
-                _context.next = 4;
-                return axios["delete"]("/delete-request/".concat(_this.request.id));
+                alert('Insert a name!');
+                return _context.abrupt("return");
 
               case 4:
-                _app__WEBPACK_IMPORTED_MODULE_3__.bus.$emit('reload-collections');
-                _context.next = 7;
-                return _this.$router.push('/');
+                _context.next = 6;
+                return axios.post("/rename-request/".concat(_this.request.id), {
+                  new_name: new_name
+                });
 
-              case 7:
+              case 6:
+                _app__WEBPACK_IMPORTED_MODULE_3__.bus.$emit('reload-collections');
+                _context.next = 9;
+                return _this.getRequest(_this.id);
+
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -316,21 +326,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    saveChanges: function saveChanges() {
+    deleteRequest: function deleteRequest() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var confirm;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios.post('/save-request', _this2.request);
+                confirm = window.confirm("Are you sure to delete?");
 
-              case 2:
-                _this2.original_hash = JSON.stringify(_this2.request).hashCode();
+                if (!confirm) {
+                  _context2.next = 4;
+                  break;
+                }
 
-              case 3:
+                _context2.next = 4;
+                return axios["delete"]("/delete-request/".concat(_this2.request.id));
+
+              case 4:
+                _app__WEBPACK_IMPORTED_MODULE_3__.bus.$emit('reload-collections');
+                _context2.next = 7;
+                return _this2.$router.push('/');
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -338,43 +358,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    sendRequest: function sendRequest() {
+    saveChanges: function saveChanges() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.loading = true;
-                _context3.prev = 1;
-                _context3.next = 4;
-                return axios.post('/send-request', _this3.request);
+                _context3.next = 2;
+                return axios.post('/save-request', _this3.request);
 
-              case 4:
-                response = _context3.sent;
-                _this3.request = response.data.item;
-                _this3.loading = false;
-                _context3.next = 14;
-                break;
+              case 2:
+                _this3.original_hash = JSON.stringify(_this3.request).hashCode();
 
-              case 9:
-                _context3.prev = 9;
-                _context3.t0 = _context3["catch"](1);
-                console.log(_context3.t0);
-                _this3.loading = false;
-                return _context3.abrupt("return");
-
-              case 14:
+              case 3:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[1, 9]]);
+        }, _callee3);
       }))();
     },
-    getRequest: function getRequest(id) {
+    sendRequest: function sendRequest() {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
@@ -383,20 +389,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return axios.get("/get-request/".concat(id));
+                _this4.loading = true;
+                _context4.prev = 1;
+                _context4.next = 4;
+                return axios.post('/send-request', _this4.request);
 
-              case 2:
+              case 4:
                 response = _context4.sent;
                 _this4.request = response.data.item;
-                _this4.original_hash = JSON.stringify(_this4.request).hashCode();
+                _this4.loading = false;
+                _context4.next = 14;
+                break;
 
-              case 5:
+              case 9:
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](1);
+                console.log(_context4.t0);
+                _this4.loading = false;
+                return _context4.abrupt("return");
+
+              case 14:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[1, 9]]);
+      }))();
+    },
+    getRequest: function getRequest(id) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios.get("/get-request/".concat(id));
+
+              case 2:
+                response = _context5.sent;
+                _this5.request = response.data.item;
+                _this5.original_hash = JSON.stringify(_this5.request).hashCode();
+                _this5.key++;
+
+              case 6:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   },
@@ -404,8 +447,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     params_query: function params_query() {
       if (!this.request.params || !this.request.params.length) return '';
       return this.request.params.reduce(function (prev, current) {
-        if (!current.name || !current.value) return prev;
-        return "".concat(prev, "&").concat(current.name, "=").concat(current.value);
+        if (!current.key || !current.value) return prev;
+        return "".concat(prev, "&").concat(current.key, "=").concat(current.value);
       }, '?').replace('?&', '?');
     },
     breadcrumbs: function breadcrumbs() {
@@ -434,21 +477,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     id: {
       handler: function handler(value) {
-        var _this5 = this;
+        var _this6 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context6.prev = _context6.next) {
                 case 0:
-                  _this5.getRequest(value);
+                  _this6.getRequest(value);
 
                 case 1:
                 case "end":
-                  return _context5.stop();
+                  return _context6.stop();
               }
             }
-          }, _callee5);
+          }, _callee6);
         }))();
       },
       immediate: true
@@ -512,6 +555,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       mode: 2
     };
+  },
+  methods: {
+    parseJson: function parseJson(item) {
+      try {
+        return JSON.parse(item);
+      } catch (e) {
+        return item;
+      }
+    }
   },
   computed: {
     model: {
@@ -596,7 +648,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.response-wrap[data-v-004044a8]{\n    border: 1px solid black;\n    padding: 10px;\n    overflow: auto;\n    word-wrap: break-word;\n    min-height: 300px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.response-wrap[data-v-004044a8]{\n    border: 1px solid black;\n    padding: 10px;\n    overflow: auto;\n    word-wrap: break-word;\n    min-height: 300px;\n    max-height: 50vh;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1075,7 +1127,7 @@ var render = function () {
             [
               _vm.mode === 1
                 ? _c("v-textarea", {
-                    attrs: { outlined: "" },
+                    attrs: { outlined: "", height: "500px" },
                     model: {
                       value: _vm.model,
                       callback: function ($$v) {
@@ -1104,17 +1156,17 @@ var render = function () {
                               on: {
                                 "click:prepend": function ($event) {
                                   return _vm.json_model.push({
-                                    name: "",
+                                    key: "",
                                     value: "",
                                   })
                                 },
                               },
                               model: {
-                                value: header.name,
+                                value: header.key,
                                 callback: function ($$v) {
-                                  _vm.$set(header, "name", $$v)
+                                  _vm.$set(header, "key", $$v)
                                 },
-                                expression: "header.name",
+                                expression: "header.key",
                               },
                             }),
                           ],
@@ -1189,15 +1241,15 @@ var render = function () {
                 attrs: { "prepend-icon": "mdi-plus", outlined: "" },
                 on: {
                   "click:prepend": function ($event) {
-                    return _vm.model.push({ name: "", value: "" })
+                    return _vm.model.push({ key: "", value: "" })
                   },
                 },
                 model: {
-                  value: header.name,
+                  value: header.key,
                   callback: function ($$v) {
-                    _vm.$set(header, "name", $$v)
+                    _vm.$set(header, "key", $$v)
                   },
-                  expression: "header.name",
+                  expression: "header.key",
                 },
               }),
             ],
@@ -1254,13 +1306,33 @@ var render = function () {
     [
       _c(
         "v-row",
+        { attrs: { align: "center", "no-gutters": "" } },
         [
           _c(
             "v-col",
+            { attrs: { cols: "auto" } },
             [
               _c("v-breadcrumbs", {
                 attrs: { items: _vm.breadcrumbs, divider: ">" },
               }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "1" } },
+            [
+              _c(
+                "v-btn",
+                { attrs: { icon: "" }, on: { click: _vm.rename } },
+                [
+                  _c("v-icon", { attrs: { small: "" } }, [
+                    _vm._v("mdi-pencil"),
+                  ]),
+                ],
+                1
+              ),
             ],
             1
           ),
@@ -1440,6 +1512,7 @@ var render = function () {
                             "v-card-text",
                             [
                               _c("params", {
+                                key: _vm.key,
                                 model: {
                                   value: _vm.request.headers,
                                   callback: function ($$v) {
@@ -1469,6 +1542,7 @@ var render = function () {
                             "v-card-text",
                             [
                               _c("params", {
+                                key: _vm.key,
                                 model: {
                                   value: _vm.request.params,
                                   callback: function ($$v) {
@@ -1498,6 +1572,7 @@ var render = function () {
                             "v-card-text",
                             [
                               _c("request-body", {
+                                key: _vm.key,
                                 model: {
                                   value: _vm.request.body,
                                   callback: function ($$v) {
@@ -1527,6 +1602,7 @@ var render = function () {
       _vm._v(" "),
       _vm.request.response
         ? _c("response", {
+            key: _vm.key,
             model: {
               value: _vm.request.response,
               callback: function ($$v) {
@@ -1651,7 +1727,7 @@ var render = function () {
                 : _vm._e(),
               _vm._v(" "),
               _vm.mode === 1
-                ? _c("pre", [_vm._v(_vm._s(JSON.parse(_vm.model.contents)))])
+                ? _c("pre", [_vm._v(_vm._s(_vm.parseJson(_vm.model.contents)))])
                 : _vm._e(),
               _vm._v(" "),
               _vm.mode === 3

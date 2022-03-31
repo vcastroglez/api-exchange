@@ -149,8 +149,8 @@ export default {
         params_query(){
             if(!this.request.params || !this.request.params.length) return '';
             return this.request.params.reduce((prev, current) => {
-                if (!current.name || !current.value) return prev;
-                return `${prev}&${current.name}=${current.value}`
+                if (!current.key || !current.value) return prev;
+                return `${prev}&${current.key}=${current.value}`
             }, '?').replace('?&', '?');
         },
         breadcrumbs(){

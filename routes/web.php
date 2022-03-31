@@ -44,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/delete-request/{id}', [RequestController::class, 'delete']);
     Route::get('/get-request/{id}', [RequestController::class, 'index']);
 
-
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::get('{path}', function (Request $request) {
         $user = $request->user();

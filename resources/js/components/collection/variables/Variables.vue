@@ -9,8 +9,8 @@
             <v-row no-gutters v-for="(variable,index) in variables" :key="index">
                 <v-col cols="3">
                     <v-text-field prepend-icon="mdi-plus"
-                                  @click:prepend="variables.push({name:'',initial_value:'',current_value:''})" outlined
-                                  v-model="variable.name"></v-text-field>
+                                  @click:prepend="variables.push({key:'',initial_value:'',current_value:''})" outlined
+                                  v-model="variable.key"></v-text-field>
                 </v-col>
                 <v-col>
                     <v-text-field outlined v-model="variable.initial_value"></v-text-field>
@@ -41,7 +41,7 @@ export default {
         async getVariables() {
             const response = await axios.get(`/get-variables/${this.id}`);
             this.variables = response.data.variables || [];
-            if (!this.variables.length) this.variables.push({name: '', initial_value: '', current_value: ''});
+            if (!this.variables.length) this.variables.push({key: '', initial_value: '', current_value: ''});
         }
     },
     computed:{

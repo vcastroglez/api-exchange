@@ -68,5 +68,6 @@ export default {
         overflow: auto;
         word-wrap: break-word;
         min-height: 300px;
+        max-height: 50vh;
     }
 </style>

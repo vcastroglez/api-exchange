@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('collection_id');
             $table->foreign('collection_id')->references('id')->on('collections');
-            $table->string('name');
+            $table->string('key');
             $table->longText('initial_value')->nullable();
             $table->longText('current_value')->nullable();
             $table->timestamps();

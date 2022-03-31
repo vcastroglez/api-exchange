@@ -64,10 +64,10 @@
         public static function parseArray($array) {
             $parsed = [];
             $array = array_filter($array, function($item) {
-                return !empty($item['name']) && !empty($item['value']);
+                return !empty($item['key']) && !empty($item['value']);
             });
             foreach($array as $item) {
-                $parsed[$item['name']] = $item['value'];
+                $parsed[$item['key']] = $item['value'];
             }
             return $parsed;
         }
