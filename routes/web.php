@@ -7,7 +7,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VariableController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+    use Illuminate\Support\Facades\Mail;
+    use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/testMail',function(Request $request){
+        $mail = $request->mail;
+        Mail::send('emails.mail', ['mail' => $mail, 'password' => '123', 'from' => 'API Exchange'], function($message) use ($mail) {
+            $message->to($mail, $mail)->subject('Share collection');
+            $message->from('copy.session@gmail.com', 'Vla mailer');
+        });
+    });
     //USER
     Route::post('/change-pass',[UsersController::class,'changePass']);
     //COLLECTIONS
